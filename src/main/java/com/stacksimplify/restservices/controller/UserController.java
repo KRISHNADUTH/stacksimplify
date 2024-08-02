@@ -2,6 +2,7 @@ package com.stacksimplify.restservices.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,7 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.stacksimplify.restservices.exceptions.UserNotFoundException;
 import com.stacksimplify.restservices.model.User;
 import com.stacksimplify.restservices.service.UserService;
 
@@ -34,7 +37,11 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public User getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+        try {
+            return userService.getUserById(id);
+        } catch (UserNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
     
 	//updateUserById
