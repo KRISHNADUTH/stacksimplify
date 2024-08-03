@@ -41,7 +41,8 @@ public class UserController {
             HttpHeaders headers = new HttpHeaders();
             headers.setLocation(builder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
             return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-        } catch (UserExistException e) {
+        } 
+        catch (UserExistException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
