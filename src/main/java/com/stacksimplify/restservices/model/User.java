@@ -13,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,9 +30,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotEmpty(message = "User name is mandatory field please provide...")
     @Column(name="USER_NAME", length = 50, nullable = false,unique = true)
     private String userName;
     
+    @Size(min = 2, message = "Firstname should be atleast 2 characters length...")
     @Column(name="FIRST_NAME", length = 50, nullable = false)
     private String firstName;
     
